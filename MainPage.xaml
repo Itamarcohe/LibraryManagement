@@ -1,0 +1,288 @@
+﻿<Page
+    x:Class="LibraryManagement.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LibraryManagement"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:LibraryManagement.Helpers"
+    mc:Ignorable="d"
+
+
+
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Margin="0,0,-30,0">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Library.png" Stretch="UniformToFill" />
+        </Grid.Background>
+
+
+        <!--// Search Form Grid-->
+
+        <Grid Margin="315, -115, 200, 800" x:Name="SearchFormGrid" Visibility="Collapsed" Width="780" Height="49" Background="LightBlue" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <CheckBox x:Name="IsAvailableCB" Background="White">IsAvailable</CheckBox>
+                <TextBox x:Name="AuthorTextBox" PlaceholderText="Author" Width="100" Height="30"/>
+                <TextBox x:Name="TitleTextBox" PlaceholderText="Name" Width="100" Height="30"/>
+                <ComboBox x:Name="SearchGenreComboBox" Width="100" Height="30" />
+                <TextBox x:Name="MinPriceTextBox" PlaceholderText="Min Price" Width="100" Height="30"/>
+                <TextBox x:Name="MaxPriceTextBox" PlaceholderText="Max Price" Width="100" Height="30"/>
+                <Button x:Name="SearchButton" Content="Search" Click="SearchButton_Click" Margin="15,0,5,0"/>
+                <Button x:Name="ClearButton" Content="Clear" Click="ClearSearch_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <Button x:Name="BackToLoginFromData" Content="Back To Login" Click="BackToLoginButton_Click" Margin="930,0,0,800" Width="120" Height="40" Background="LightBlue" Visibility="Collapsed" />
+
+        <Grid>
+            <!-- Labels for each row -->
+            <Grid Margin="423, 40,264,740" Background="LightBlue" Height="50" Width="983" Name="LabelsGrid" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="175"/>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="175" />
+                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="74" />
+                    <ColumnDefinition Width="114" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1.5">
+                    <Grid>
+                        <TextBlock Text="Author" FontWeight="Bold" Margin="10" TextAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1.5">
+                    <Grid>
+                        <TextBlock Text="Name" FontWeight="Bold" Margin="10" TextAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1.5">
+                    <Grid>
+                        <TextBlock Text="Genre" FontWeight="Bold" Margin="10" TextAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1.5">
+                    <Grid>
+                        <TextBlock Text="Publisher" FontWeight="Bold" Margin="10" TextAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="4" BorderBrush="Black" BorderThickness="1.5">
+                    <Grid>
+                        <TextBlock Text="Price" FontWeight="Bold" Margin="10" TextAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="5" BorderBrush="Black" BorderThickness="1.5">
+                    <Grid>
+                        <TextBlock Text="Year" FontWeight="Bold" Margin="10" TextAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </Border>
+
+
+                <Border Grid.Column="6" BorderBrush="Black" BorderThickness="1.5">
+                    <Grid>
+                        <TextBlock Text="Rent" FontWeight="Bold" Margin="10" TextAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="7" BorderBrush="Black" BorderThickness="1.5">
+                    <Grid>
+                        <TextBlock Text="View" FontWeight="Bold" Margin="10" TextAlignment="Center" FontSize="16"/>
+                    </Grid>
+                </Border>
+
+
+
+            </Grid>
+
+            <ScrollViewer Margin="239,200, 52, 50" Name="LibraryData" Visibility="Collapsed">
+
+                <ItemsControl Name="LibraryItemsControl" ItemsSource="{x:Bind libraryManager.LibraryItems, Mode=TwoWay}" DataContext="{x:Bind libraryManager}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="322 ,10 ,352 ,0" Background="AliceBlue" Height="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="175"/>
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="175" />
+                                    <ColumnDefinition Width="75" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="74" />
+                                    <ColumnDefinition Width="116" />
+                                    <ColumnDefinition Width="114" />
+
+                                </Grid.ColumnDefinitions>
+
+
+
+                                <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1.5">
+                                    <Grid>
+                                        <TextBlock Text="{Binding Converter={StaticResource AuthorConverter}}" FontWeight="Bold" Margin="10" />
+                                    </Grid>
+                                </Border>
+
+
+
+                                <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1.5">
+                                    <Grid>
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="10"/>
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1.5">
+                                    <Grid>
+                                        <TextBlock Text="{Binding Genre}" FontWeight="Bold" Margin="10"/>
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1.5">
+                                    <Grid>
+                                        <TextBlock Text="{Binding Publisher}" FontWeight="Bold" Margin="10"/>
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Column="4" BorderBrush="Black" BorderThickness="1.5">
+                                    <Grid>
+
+                                        <TextBlock FontWeight="Bold" Margin="10">
+                                                    $<Run Text="{Binding CurrentPrice}"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Column="5" BorderBrush="Black" BorderThickness="1.5">
+                                    <Grid>
+                                        <TextBlock Text="{Binding PublishDate.Year}" FontWeight="Bold" Margin="10"/>
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Column="6" BorderBrush="Black" BorderThickness="1.5">
+                                    <Grid>
+                                        <Button FontWeight="Bold" Content="Rent" Click="RentButton_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Background="AliceBlue"/>
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Column="7" BorderBrush="Black" BorderThickness="1.5">
+                                    <Grid>
+                                        <Button Content="Details" Click="DetailsButton_Clicked" FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" Background="AliceBlue" />
+
+                                    </Grid>
+                                </Border>
+                                <Border Grid.Column="8" BorderBrush="Black" BorderThickness="1.5">
+                                    <Grid>
+                                        <Button Content="Edit" Click="EditButton_Click" FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                Visibility="{Binding DataContext.IsLibrarianLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=LibraryItemsControl}" Background="AliceBlue" />
+
+                                    </Grid>
+                                </Border>
+
+
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+
+        <ContentDialog x:Name="EditItemDialog" Title="Edit Item" Margin="591,74,691,134" Grid.Row="1" Height="NaN">
+            <StackPanel>
+                <TextBox x:Name="EditPrice" PlaceholderText="Price"/>
+                <TextBox x:Name="EditDiscount" PlaceholderText="DiscountPrice"/>
+                <Button Content="Confirm Changes" Margin="10,10" Width="60" Click="ConfirmEdit_Click"/>
+                <Button Content="Close" Margin="10,10"  Width="60"  Click="CloseEdit_Click" />
+
+            </StackPanel>
+        </ContentDialog>
+
+
+        <!--Login Grid-->
+        <Grid Name="LoginGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Height="164" Background="LightBlue">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="NameTextBox" Width="275" Margin="10,13,10,39" Grid.RowSpan="3" PlaceholderText="Name: " Height="32" />
+
+            <PasswordBox x:Name="PasswordTextBox" Width="275" Margin="10,28,10,-8" Grid.Row="2" PlaceholderText="Password: " Height="32"/>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,58,0,-58">
+                <Button Name="LoginButton" Content="Login" Margin="10" Click="LoginButton_Click" />
+                <Button Name="SignUpButton" Content="Sign Up" Click="SignUpButton_Click" />
+                <Button Name="LoginAsGuestButton" Content="Login as Guest" Margin="10" Click="GuestLoginButton_Click" />
+            </StackPanel>
+        </Grid>
+
+
+        <!--SignUp Grid-->
+        <Grid x:Name="SignUpGrid" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Top" Background="LightBlue" Margin="0,422,0,0" Height="196">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="81*"/>
+                <ColumnDefinition Width="95*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="NewNameTextBox" Width="275" Margin="36,10,41,10" Grid.ColumnSpan="2" PlaceholderText="New UserName: " Height="32" />
+
+            <PasswordBox x:Name="NewPasswordTextBox" Width="275"  Margin="36,0,38,-37" Grid.ColumnSpan="2" PlaceholderText="New-Password: " Grid.Row="2" Height="32"/>
+
+            <PasswordBox x:Name="ConfirmPasswordTextBox" Width="275" Margin="36,46,41,-78" Grid.ColumnSpan="2" Grid.Row="2" PlaceholderText="Confirm-Password: " Height="32"/>
+
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="82,82,0,-134" Grid.Row="2" Grid.ColumnSpan="2">
+                <Button Content="Add User" Click="SignUpButton_Click" />
+                <Button Content="Back to Login" Click="BackToLoginButton_Click" />
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="LibarianOptions" Background="LightBlue" Height="140" Width="550" Margin="5,0,1405,545" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0">
+                <RadioButton x:Name="BookRadioButton" Content="Book" GroupName="ItemType" IsChecked="True" Click="BookRadioButton_Click"/>
+                <RadioButton x:Name="MagazineRadioButton" Content="Magazine" GroupName="ItemType" Click="MagazineRadioButton_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" >
+                <TextBox x:Name="AddBookAuthor" PlaceholderText="Author" Width="75" Height="30" />
+                <TextBox x:Name="AddItemName" PlaceholderText="Name" Width="75" Height="30"/>
+                <TextBox x:Name="AddItemPublisher" PlaceholderText="Publisher" Width="75" Height="30"/>
+                <ComboBox x:Name="AddBookGenreComboBox" Width="75" Height="30" PlaceholderText="Genre" Margin="0,45,0,0"/>
+                <TextBox x:Name="AddItemPrice" PlaceholderText="Price" Width="75" Height="30"/>
+                <DatePicker x:Name="AddItemPublishDate" Width="75" Height="30"/>
+                <TextBox x:Name="AddItemDiscount" PlaceholderText="Discount %" Width="85" Height="30"/>
+                <Button x:Name="AddItemButton" Content="Add" Click="AddItemButton_Clicked" Margin="-295,75,0,0"/>
+            </StackPanel>
+        </Grid>
+
+
+
+        <Grid x:Name="CashBox" Background="AliceBlue" Height="50" Width="110" Margin="1600, -40, 0, 890" Visibility="Collapsed">
+            <Border BorderThickness="4">
+
+
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold">
+                    $<Run Text="{x:Bind libraryManager.LibraryCashBox.TotalCash,  Mode=OneWay}"/>
+                </TextBlock>
+
+            </Border>
+        </Grid>
+
+
+        <Button Height="50" Width="110" x:Name="ShowAllRentsButton" Content="All Rents" Click="ShowAllRents_Click" Margin="1440,35,0,0" Background="AliceBlue" VerticalAlignment="Top" Visibility="Collapsed"/>
+
+
+        <Button Height="50" Width="110" x:Name="ShowMyRentsButton" Content="My Rents" Click="ShowDialogButton_Click" Margin="1580,35,0,0" Background="AliceBlue" VerticalAlignment="Top" Visibility="Collapsed"/>
+
+    </Grid>
+</Page>
